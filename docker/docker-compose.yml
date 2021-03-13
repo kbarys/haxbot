@@ -1,0 +1,8 @@
+services:
+  haxbot:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ../src:/app/src
+      - ../.env:/app/.env
