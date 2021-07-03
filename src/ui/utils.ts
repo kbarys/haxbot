@@ -1,7 +1,7 @@
 import { write as writeToClipboard } from "clipboardy";
-import { logging, Key } from "selenium-webdriver";
+import { logging, Key, WebElement, WebDriver } from "selenium-webdriver";
 
-export const logLogsFromBrowser = (driver) => {
+export const logLogsFromBrowser = (driver: WebDriver) => {
   driver
     .manage()
     .logs()
@@ -13,7 +13,13 @@ export const logLogsFromBrowser = (driver) => {
     });
 };
 
-export const inputText = async ({ element, text }) => {
+export const inputText = async ({
+  element,
+  text,
+}: {
+  element: WebElement;
+  text: string;
+}) => {
   await writeToClipboard(text);
   if (process.platform === "darwin") {
     await element.sendKeys(Key.COMMAND, "v", Key.ENTER);

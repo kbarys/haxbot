@@ -1,15 +1,15 @@
-import { By, Key, until, Builder } from "selenium-webdriver";
-import { Options } from "selenium-webdriver/chrome.js";
+import { By, Key, until, Builder, WebDriver } from "selenium-webdriver";
+import { Options } from "selenium-webdriver/chrome";
 
-import { CONFIG } from "../config.js";
-import { logLogsFromBrowser, inputText } from "./utils.js";
+import { CONFIG } from "../config";
+import { logLogsFromBrowser, inputText } from "./utils";
 
-let driver;
+let driver: WebDriver;
 
 export const setupChromeDriver = async () => {
   const chromeOptions = new Options()
     .windowSize({ width: 950, height: 1024 })
-    .addArguments(["--ignore-certificate-errors", "--disable-dev-shm-usage"]);
+    .addArguments("--ignore-certificate-errors", "--disable-dev-shm-usage");
   driver = await new Builder()
     .forBrowser("chrome")
     .setChromeOptions(chromeOptions)
@@ -62,7 +62,7 @@ export const selectThread = async () => {
   await driver.wait(until.elementLocated(By.xpath(threadMainElementXPath)));
 };
 
-export const sendMessage = async (message) => {
+export const sendMessage = async (message: string) => {
   const textBox = driver.findElement(By.xpath("//*[@role='textbox']"));
   await inputText({ element: textBox, text: message });
 };

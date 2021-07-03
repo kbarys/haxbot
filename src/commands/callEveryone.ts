@@ -1,4 +1,4 @@
-import * as Ui from "../ui/index.js";
+import * as Ui from "../ui/index";
 
 export const regex = "(wolaj ludzi)|(wołaj ludzi)";
 
