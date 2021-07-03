@@ -5,4 +5,7 @@ services:
       dockerfile: docker/Dockerfile
     volumes:
       - ../src:/app/src
+      - ../typings:/app/typings
       - ../.env:/app/.env
+    environment:
+      - HAXBOT_CI=true

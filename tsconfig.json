@@ -1,0 +1,15 @@
+{
+  "include": ["./src/"],
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "build",
+    "target": "ES6",
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "typeRoots": ["typings"],
+    "esModuleInterop": true
+  }
+}

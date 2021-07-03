@@ -1,18 +1,18 @@
-import { By, Key, until, Builder } from "selenium-webdriver";
-import { Options } from "selenium-webdriver/chrome.js";
+import { By, Key, until, Builder, WebDriver } from "selenium-webdriver";
+import { Options } from "selenium-webdriver/chrome";
 
-import * as ChatSpy from "./haxball-chat-spy.js";
-import * as Message from "../message.js";
-import { CONFIG } from "../config.js";
-import { SERVER_SOCKET_URL } from "../socket.js";
-import { logLogsFromBrowser, inputText } from "./utils.js";
+import * as ChatSpy from "./haxball-chat-spy";
+import * as Message from "../message";
+import { CONFIG } from "../config";
+import { SERVER_SOCKET_URL } from "../socket";
+import { logLogsFromBrowser, inputText } from "./utils";
 
-let driver;
+let driver: WebDriver;
 
 export const setupChromeDriver = async () => {
   const chromeOptions = new Options()
     .windowSize({ width: 1024, height: 1024 })
-    .addArguments(["--ignore-certificate-errors", "--disable-dev-shm-usage"]);
+    .addArguments("--ignore-certificate-errors", "--disable-dev-shm-usage");
   driver = await new Builder()
     .forBrowser("chrome")
     .setChromeOptions(chromeOptions)
@@ -42,16 +42,16 @@ export const enterPasswordRoom = async () => {
   await passwordInput.sendKeys(CONFIG.roomPassword, Key.ENTER);
 };
 
-export const spyOnChat = async () => {
-  await driver.wait(until.elementLocated(By.css(".chatbox-view")));
-  await driver.executeScript(
-    ChatSpy.spy,
-    SERVER_SOCKET_URL,
-    Message.haxballMessageIntercepted.type
-  );
+export const setupMessageModule = async () => {
+  await driver.executeScript(Message.setupModule, { inBrowser: true });
 };
 
-export const sendMessage = async (text) => {
+export const spyOnChat = async () => {
+  await driver.wait(until.elementLocated(By.css(".chatbox-view")));
+  await driver.executeScript(ChatSpy.spy, SERVER_SOCKET_URL);
+};
+
+export const sendMessage = async (text: string) => {
   const chatInput = driver.findElement(By.css(".chatbox-view div.input input"));
   await inputText({ element: chatInput, text });
 };
